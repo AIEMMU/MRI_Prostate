@@ -3,7 +3,6 @@ https://download.pytorch.org/whl/cpu/torchvision-0.7.0%2Bcpu-cp36-cp36m-linux_x8
 fastai
 voila
 ipywidgets
-opencv-python==3.4.5.20
 scikit-image
 kornia
 pydicom
