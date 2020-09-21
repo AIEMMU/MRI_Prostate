@@ -5,3 +5,5 @@ voila
 ipywidgets
 opencv-python==3.4.5.20
 scikit-image
+kornia
+pydicom
