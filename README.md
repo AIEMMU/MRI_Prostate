@@ -8,4 +8,13 @@ Before running the python software, you need install its dependecies, which reli
 ```
 pip install -r requirements.txt
 ```
+## Usage
+The segmentation model file can be downloaded from [here](https://www.dropbox.com/s/a2rwhy29wx9s448/export_orig.pkl?dl=0)
 
+You can either run the jupyter notebooks, to use the code, or run the code in the app folder. 
+
+```
+cd app
+python ui.py
+```
+A windows executable file is also downloadable from the releases pages [here].
