@@ -10,7 +10,7 @@ class predictor():
         contours = sorted(contours, key=cv2.contourArea)[-1]
         return self.approxContour(contours)
 
-    def approxContour(self, cnt, eps=0.01):
+    def approxContour(self, cnt, eps=0.001):
         arclen = cv2.arcLength(cnt, True)
         epsilon = arclen * eps
         approx = cv2.approxPolyDP(cnt, epsilon, True)
