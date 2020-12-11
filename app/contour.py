@@ -3,7 +3,7 @@ from PyQt5.QtGui import QPainterPath, QPainterPath, QPainter, QPolygonF, QPen
 from PyQt5.QtWidgets import QGraphicsItem
 
 import numpy as np
-from scipy import interpolate
+
 
 class Contour(QtWidgets.QGraphicsItem):
 
@@ -29,7 +29,7 @@ class Contour(QtWidgets.QGraphicsItem):
         self.objType = None
         self.label = None
         self.editable = False
-
+        self.intersectPoint = None
         self.setFlag(QtWidgets.QGraphicsItem.ItemIsMovable)
         self.setFlag(QtWidgets.QGraphicsItem.ItemIsSelectable)
 
@@ -53,6 +53,8 @@ class Contour(QtWidgets.QGraphicsItem):
             color =  self.line_color
             pen = QPen(color)
             pen.setWidth(self.point_size / 2)
+            painter.setBrush(QtGui.QBrush(self.line_color))
+            painter.setOpacity(0.5)
             painter.setPen(pen)
             path = self.shape()
             if self.closed == True:
@@ -64,6 +66,7 @@ class Contour(QtWidgets.QGraphicsItem):
             painter.drawPath(vertex_path)
             painter.fillPath(vertex_path, self.line_color)
 
+
     def drawVertex(self, path, idx):
         psize = self.point_size
         if idx == self.hIndex:
@@ -73,6 +76,8 @@ class Contour(QtWidgets.QGraphicsItem):
         else:
             self.vertex_fill_color = QtGui.QColor(0, 255, 0, 255)
         path.addEllipse(self.mapFromScene(self.points[idx]), psize, psize)
+        if self.intersectPoint is not None:
+            path.addEllipse(self.mapFromScene(self.intersectPoint), psize, psize)
 
     def shape(self):
         path = QPainterPath()

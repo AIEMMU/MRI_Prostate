@@ -1,4 +1,4 @@
-from PyQt5 import  QtGui
+from PyQt5 import QtGui
 
 
 from typing import *

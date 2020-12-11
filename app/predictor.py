@@ -1,6 +1,6 @@
 from fastai.vision.all import *
 import cv2
-
+import pathlib
 class predictor():
 
     def __init__(self, fn='export_orig.pkl', cpu=True):
@@ -10,7 +10,7 @@ class predictor():
         contours = sorted(contours, key=cv2.contourArea)[-1]
         return self.approxContour(contours)
 
-    def approxContour(self, cnt, eps=0.001):
+    def approxContour(self, cnt, eps=0.01):
         arclen = cv2.arcLength(cnt, True)
         epsilon = arclen * eps
         approx = cv2.approxPolyDP(cnt, epsilon, True)

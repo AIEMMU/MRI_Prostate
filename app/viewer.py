@@ -66,12 +66,12 @@ class SubScene(QtWidgets.QGraphicsScene):
                 self.QGitem.setZValue(len(self.polys) + 1)
             self.QGitem.prepareGeometryChange()
             self.QGitem.points = qPoints
-            self.QGitem.points.append((qPoints[0]))
+            self.QGitem.addPoint((qPoints[0]))
         else:
-            self.selectedContour = self.polys[0]
-            self.selectedContour.prepareGeometryChange()
-            self.selectedContour.points = qPoints
-            self.selectedContour.points.append((qPoints[0]))
+            self.QGitem = self.polys[0]
+            self.QGitem.prepareGeometryChange()
+            self.QGitem.points = qPoints
+            self.QGitem.addPoint((qPoints[0]))
         self.finalisePolygon()
         self.update()
 
@@ -136,19 +136,21 @@ class SubScene(QtWidgets.QGraphicsScene):
             pt2 = self.selectedContour.points[j]
             edge = QtCore.QLineF(pt1, pt2)
             normal = edge.normalVector()
-            normalTrhoughPos = QtCore.QLineF(pt.x(), pt.y(), pt.x()+normal.dx(), pt.y()+normal.dy())
-            if item_under_mouse not in self.items()[:-1]:
-                normalTrhoughPos = QtCore.QLineF(pt.x(), pt.y(), pt.x() - normal.dx(), pt.y() - normal.dy())
-            intersectionPt = QtCore.QPointF()
-            intersectionType = edge.intersect(
-                normalTrhoughPos, intersectionPt)
-
-            if intersectionType ==QtCore.QLineF.BoundedIntersection:
+            normalTrhoughPos = QtCore.QLineF(pt.x(), pt.y(), pt.x()+(normal.dx()*10), pt.y()+(normal.dy()*10))
+            normalTrhoughPos2 = QtCore.QLineF(pt.x(), pt.y(), pt.x() - (normal.dx() * 10), pt.y() - (normal.dy() * 10))
+            for norm in [normalTrhoughPos, normalTrhoughPos2]:
+            # if item_under_mouse  in self.items()[:-1]:
+            #     normalTrhoughPos = QtCore.QLineF(pt.x(), pt.y(), pt.x()-(normal.dx()*10), pt.y()-(normal.dy()*10))
+                intersectionPt = QtCore.QPointF()
+                intersectionType = edge.intersect(
+                    norm, intersectionPt)
                 currDist = self.ptDist(intersectionPt, pt)
-                if currDist < dist:
-                    closest = (i,j)
-                    dist = currDist
 
+                if intersectionType ==QtCore.QLineF.BoundedIntersection:
+                    currDist = self.ptDist(intersectionPt, pt)
+                    if currDist < dist:
+                        closest = (i,j)
+                        dist = currDist
         return closest
 
     def reset(self):
@@ -171,6 +173,7 @@ class SubScene(QtWidgets.QGraphicsScene):
     def mousePressEvent(self, event):
 
         pos = event.scenePos()
+
         if event.button() == QtCore.Qt.LeftButton and self.mode == self.modes[1]:
             self.overrideCursor(QtCore.Qt.CrossCursor)
             if self.line is None or self.polyFinished:
@@ -220,7 +223,6 @@ class SubScene(QtWidgets.QGraphicsScene):
         if self.mode == self.modes[2] and event.button() == QtCore.Qt.LeftButton:
             self.overrideCursor(QtCore.Qt.ClosedHandCursor)
             self.selectShapeByPoint(pos)
-
             event.accept()
             self.update()
 
@@ -269,12 +271,12 @@ class SubScene(QtWidgets.QGraphicsScene):
 
         if self.mode == self.modes[2] and QtCore.Qt.LeftButton & event.buttons():
 
-
             if self.vertexSelected():
                 self.overrideCursor(QtCore.Qt.ClosedHandCursor)
                 self.selectedContour.prepareGeometryChange()
                 self.moveVertex(pos)
                 self.update()
+                return
 
         elif self.mode == self.modes[2]:
             self.overrideCursor(QtCore.Qt.OpenHandCursor)
