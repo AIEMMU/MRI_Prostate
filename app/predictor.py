@@ -1,6 +1,20 @@
+
 from fastai.vision.all import *
 import cv2
 import pathlib
+
+import fastai.losses
+import fastai.layers
+
+fastai.layers.BaseLoss = fastai.losses.BaseLoss
+fastai.layers.CrossEntropyLossFlat = fastai.losses.CrossEntropyLossFlat
+fastai.layers.BCEWithLogitsLossFlat = fastai.losses.BCEWithLogitsLossFlat
+fastai.layers.BCELossFlat = fastai.losses.BCELossFlat
+fastai.layers.MSELossFlat = fastai.losses.MSELossFlat
+fastai.layers.L1LossFlat = fastai.losses.L1LossFlat
+fastai.layers.LabelSmoothingCrossEntropy = fastai.losses.LabelSmoothingCrossEntropy
+fastai.layers.LabelSmoothingCrossEntropyFlat = fastai.losses.LabelSmoothingCrossEntropyFlat
+
 class predictor():
 
     def __init__(self, fn='export_orig.pkl', cpu=True):
