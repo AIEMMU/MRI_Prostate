@@ -18,3 +18,13 @@ cd app
 python ui.py
 ```
 A windows executable file is also downloadable from the releases pages [here].
+
+If you use this software as part of your research, please cite our paper. 
+```
+@article{gillespie2020deep,
+  title={Deep learning in magnetic resonance prostate segmentation: A review and a new perspective},
+  author={Gillespie, David and Kendrick, Connah and Boon, Ian and Boon, Cheng and Rattay, Tim and Yap, Moi Hoon},
+  journal={arXiv preprint arXiv:2011.07795},
+  year={2020}
+}
+```
