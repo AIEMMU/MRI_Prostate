@@ -1,0 +1,12 @@
+https://download.pytorch.org/whl/cpu/torch-1.7.1%2Bcpu-cp37-cp37m-win_amd64.whl
+https://download.pytorch.org/whl/cu102/torchvision-0.8.2-cp37-cp37m-win_amd64.whl
+-f https://download.pytorch.org/whl/torch_stable.html
+torchvision==0.7.0+cpu
+fastai==2.0.13
+fastcore==1.0.13
+numpy==1.19.3
+opencv-python
+scikit-image
+kornia
+pydicom
+PyQt5
